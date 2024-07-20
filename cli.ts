@@ -1,4 +1,5 @@
 import { program } from 'commander';
+import pj from './package.json';
 
 function cmd () {
     const OPTION_KEYS = Object.freeze({
@@ -8,6 +9,7 @@ function cmd () {
     });
     
     program
+        .version(pj.version, '-v, --vers', 'output the current version')
         .option(`-o, --${OPTION_KEYS.HOST}`, 'host a new channel', false)
         .option(`-ch, --${OPTION_KEYS.CHANNEL}`, 'channel name to join', '')
         .option(`-u, --${OPTION_KEYS.USERNAME}`, 'overrides generated username if available', '');
