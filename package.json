@@ -1,0 +1,15 @@
+{
+  "name": "wktk",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.1.6",
+    "@types/localtunnel": "^2.0.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "localtunnel": "^2.0.2"
+  }
+}
