@@ -1,7 +1,7 @@
 import pj from './package.json';
 import { program } from 'commander';
 import { askInteractionType, InteractionTypes } from '@cli/interactions';
-import { createLocalTunnel, isLocalTunnelUp, serveWS } from '@sockets/host';
+import { createLocalTunnel, isLocalTunnelUp } from '@sockets/host';
 import { joinWS } from '@sockets/join';
 
 async function cmd () {
@@ -49,7 +49,9 @@ async function cmd () {
         case InteractionTypes.HOST:
             const ltURL = await createLocalTunnel();
             console.log(ltURL);
-            serveWS();
+            const childProcess = Bun.spawn(["/usr/local/bin/bun", "run", "serve.ts"]);
+            console.log(childProcess.pid);
+            joinWS(ltURL);
             break;
         case InteractionTypes.JOIN:
             joinWS(url);

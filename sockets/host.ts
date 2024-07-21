@@ -36,7 +36,7 @@ export function serveWS (port:number = 3000): void {
         username: ''
     }
 
-    const server = Bun.serve({
+    Bun.serve({
         port,
         fetch(req, server) {
             const randomUsername = generate({ wordsPerString: 2, minLength: 5, separator: "_", join: "" })
@@ -63,6 +63,4 @@ export function serveWS (port:number = 3000): void {
             }
         },
     });
-
-    
 }
