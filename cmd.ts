@@ -42,8 +42,7 @@ async function cmd () {
     const interactionType = await askInteractionType();
     switch(interactionType) {
         case InteractionTypes.HOST:
-            const tunnel = await createLocalTunnel();
-            const { url } = tunnel;
+            const url = await createLocalTunnel();
             console.log(url);
             serveWS();
             break;

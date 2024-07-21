@@ -20,12 +20,16 @@ function handleMsgReceived (evt: WebSocket.MessageEvent) {
 
 export function joinWS() {
     const url = prompt('URL:');
+    const options = { 
+        headers: {
+            'bypass-tunnel-reminder': 1,
+            'username': crypto.randomUUID() 
+        } 
+    };
 
-    const ws = new WebSocket(`ws://${url}`, { headers: { 'bypass-tunnel-reminder': 1, 'username': crypto.randomUUID() } })
-    const openHandler = () => {
+    const ws = new WebSocket(`ws://${url}`, options)
+    ws.addEventListener('open', () => {
         initSendHandler(ws);
-    }
-
-    ws.addEventListener('open', openHandler);
+    });
     ws.addEventListener('message', handleMsgReceived)
 }

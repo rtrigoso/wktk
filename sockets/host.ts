@@ -12,7 +12,10 @@ export async function isLocalTunnelUp (): Promise<boolean> {
     let res;
 
     try {
-        res = await fetch(url, { signal: AbortSignal.timeout(timeoutInSeconds) });
+        res = await fetch(url, { 
+            signal: AbortSignal.timeout(timeoutInSeconds),
+            redirect: 'follow' 
+        });
     }
     catch(err) {
         return false;
@@ -21,11 +24,11 @@ export async function isLocalTunnelUp (): Promise<boolean> {
     return res.ok && res.status > 199 && res.status < 300;
 }
 
-export async function createLocalTunnel (port:number = 3000): Promise<localtunnel.Tunnel> {
+export async function createLocalTunnel (port:number = 3000): Promise<string> {
     const tunnel = await localtunnel({ port });
-    tunnel.url;
+    const url = new URL(tunnel.url);
 
-    return tunnel;
+    return url.host;
 }
 
 export function serveWS (port:number = 3000): void {
