@@ -2,6 +2,7 @@ import pj from './package.json';
 import { program } from 'commander';
 import { askInteractionType, InteractionTypes } from '@cli/interactions';
 import { createLocalTunnel, isLocalTunnelUp, serveWS } from '@sockets/host';
+import { joinWS } from '@sockets/join';
 
 async function cmd () {
     const OPTION_KEYS = Object.freeze({
@@ -47,7 +48,7 @@ async function cmd () {
             serveWS();
             break;
         case InteractionTypes.JOIN:
-            console.log('join a server')
+            joinWS()
             break;
     }
 }
