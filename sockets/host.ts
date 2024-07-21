@@ -36,7 +36,7 @@ export function serveWS (port:number = 3000): void {
         username: ''
     }
 
-    Bun.serve({
+    const server = Bun.serve({
         port,
         fetch(req, server) {
             const randomUsername = generate({ wordsPerString: 2, minLength: 5, separator: "_", join: "" })
@@ -49,6 +49,7 @@ export function serveWS (port:number = 3000): void {
         websocket: {
             open(ws: ServerWebSocket<ServerWebSocketDataType>) : void {
                 const msg = `${ws.data.username} has entered the chat`;
+                console.log(msg);
                 ws.subscribe("the-group-chat");
                 ws.publish("the-group-chat", msg);
             },
@@ -62,4 +63,6 @@ export function serveWS (port:number = 3000): void {
             }
         },
     });
+
+    
 }

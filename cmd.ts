@@ -8,25 +8,30 @@ async function cmd () {
     const OPTION_KEYS = Object.freeze({
         CHANNEL: 'channel',
         USERNAME: 'username',
-        HOST: 'host'
+        HOST: 'host',
+        JOIN: 'join'
     });
     
     program
         .version(pj.version, '-v, --vers', 'output the current version')
-        .option(`-o, --${OPTION_KEYS.HOST}`, 'host a new channel', false)
-        .option(`-ch, --${OPTION_KEYS.CHANNEL}`, 'channel name to join', '')
-        .option(`-u, --${OPTION_KEYS.USERNAME}`, 'overrides generated username if available', '');
+        .option(`-j, --${OPTION_KEYS.HOST}`, 'host a new channel', false)
+        .option(`-ch, --${OPTION_KEYS.CHANNEL} <type>`, 'channel name to join', '')
+        .option(`-u, --${OPTION_KEYS.USERNAME} <type>`, 'overrides generated username if available', '');
     
     program.parse(process.argv);
     
     const options = program.opts();
+    let url = ""
 
     if (options[OPTION_KEYS.HOST]) {
-        console.log('init server');
+        console.log('host new channel');
     }
 
     if (options[OPTION_KEYS.CHANNEL]) {
-        console.log('gets channel name');
+        url = options[OPTION_KEYS.CHANNEL]
+        console.log(`joining ${url}`)
+        joinWS(url);
+        return;
     }
     
     if (options[OPTION_KEYS.USERNAME]) {
@@ -42,12 +47,12 @@ async function cmd () {
     const interactionType = await askInteractionType();
     switch(interactionType) {
         case InteractionTypes.HOST:
-            const url = await createLocalTunnel();
-            console.log(url);
+            const ltURL = await createLocalTunnel();
+            console.log(ltURL);
             serveWS();
             break;
         case InteractionTypes.JOIN:
-            joinWS()
+            joinWS(url);
             break;
     }
 }
