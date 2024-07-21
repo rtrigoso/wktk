@@ -21,6 +21,12 @@
     // Some stricter flags
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": true,
+
+    "baseUrl": "./",
+    "paths": {
+        "@cli/*": ["cli/*"],
+        "@sockets/*": ["sockets/*"]
+    }
   }
 }
